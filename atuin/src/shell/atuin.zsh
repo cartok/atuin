@@ -55,15 +55,15 @@ _atuin_search_global() {
   _atuin_search
 }
 _atuin_search_host() {
-  ATUIN_FILTER_MODE=global
+  ATUIN_FILTER_MODE=host
   _atuin_search
 }
 _atuin_search_session() {
-  ATUIN_FILTER_MODE=global
+  ATUIN_FILTER_MODE=session
   _atuin_search
 }
 _atuin_search_directory() {
-  ATUIN_FILTER_MODE=global
+  ATUIN_FILTER_MODE=directory
   _atuin_search
 }
 _atuin_search_workspace() {
