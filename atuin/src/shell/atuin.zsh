@@ -33,7 +33,8 @@ _atuin_search() {
     # swap stderr and stdout, so that the tui stuff works
     # TODO: not this
     # shellcheck disable=SC2048
-    output=$(ATUIN_SHELL_ZSH=t ATUIN_LOG=error atuin search $* -i -- $BUFFER 3>&1 1>&2 2>&3)
+    output=$(ATUIN_SHELL_ZSH=t ATUIN_LOG=error atuin search $* -i \
+        ${ATUIN_FILTER_MODE:+--filter-mode=$ATUIN_FILTER_MODE} -- $BUFFER 3>&1 1>&2 2>&3)
 
     zle reset-prompt
 
@@ -49,6 +50,27 @@ _atuin_search() {
     fi
 }
 
+_atuin_search_global() {
+  ATUIN_FILTER_MODE=global
+  _atuin_search
+}
+_atuin_search_host() {
+  ATUIN_FILTER_MODE=host
+  _atuin_search
+}
+_atuin_search_session() {
+  ATUIN_FILTER_MODE=session
+  _atuin_search
+}
+_atuin_search_directory() {
+  ATUIN_FILTER_MODE=directory
+  _atuin_search
+}
+_atuin_search_workspace() {
+  ATUIN_FILTER_MODE=workspace
+  _atuin_search
+}
+
 _atuin_up_search() {
     # Only trigger if the buffer is a single line
     if [[ ! $BUFFER == *$'\n'* ]]; then
@@ -58,8 +80,40 @@ _atuin_up_search() {
     fi
 }
 
+_atuin_up_search_global() {
+  ATUIN_FILTER_MODE=global
+  _atuin_up_search
+}
+_atuin_up_search_host() {
+  ATUIN_FILTER_MODE=host
+  _atuin_up_search
+}
+_atuin_up_search_session() {
+  ATUIN_FILTER_MODE=session
+  _atuin_up_search
+}
+_atuin_up_search_directory() {
+  ATUIN_FILTER_MODE=directory
+  _atuin_up_search
+}
+_atuin_up_search_workspace() {
+  ATUIN_FILTER_MODE=workspace
+  _atuin_up_search
+}
+
 add-zsh-hook preexec _atuin_preexec
 add-zsh-hook precmd _atuin_precmd
 
 zle -N _atuin_search_widget _atuin_search
+zle -N _atuin_search_widget_global _atuin_search_global
+zle -N _atuin_search_widget_host _atuin_search_host
+zle -N _atuin_search_widget_session _atuin_search_session
+zle -N _atuin_search_widget_directory _atuin_search_directory
+zle -N _atuin_search_widget_workspace _atuin_search_workspace
+
 zle -N _atuin_up_search_widget _atuin_up_search
+zle -N _atuin_up_search_widget_global _atuin_up_search_global
+zle -N _atuin_up_search_widget_host _atuin_up_search_host
+zle -N _atuin_up_search_widget_session _atuin_up_search_session
+zle -N _atuin_up_search_widget_directory _atuin_up_search_directory
+zle -N _atuin_up_search_widget_workspace _atuin_up_search_workspace
